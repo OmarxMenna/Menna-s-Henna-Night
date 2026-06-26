@@ -320,25 +320,24 @@ button{
 
 .headpiece{
     position:absolute;
-    width:88px;
-    height:20px;
-    left:91px;
-    top:60px;
-    background:linear-gradient(90deg, transparent 4%, #f0c648 5% 95%, transparent 96%);
-    border-radius:50% 50% 0 0;
+    width:18px;
+    height:18px;
+    left:126px;
+    top:62px;
+    background:transparent;
     z-index:5;
 }
 
 .headpiece::before{
     content:"";
     position:absolute;
-    width:9px;
-    height:12px;
-    left:39px;
-    top:-8px;
+    width:8px;
+    height:10px;
+    left:5px;
+    top:0;
     border-radius:50% 50% 45% 45%;
-    background:#c72e2d;
-    box-shadow:0 11px 0 #f6d35c;
+    background:linear-gradient(180deg, #ff4a3f, #a9141d);
+    box-shadow:0 0 8px rgba(199,46,45,.56);
 }
 
 .earring{
@@ -560,12 +559,13 @@ button{
 
 .arm.left{
     left:38px;
-    transform:rotate(-118deg);
+    top:154px;
+    transform:rotate(-38deg);
 }
 
 .arm.right{
     right:38px;
-    transform:rotate(118deg);
+    transform:rotate(-58deg);
     transform-origin:left center;
 }
 
@@ -706,9 +706,9 @@ button{
 
 @media(max-height:720px){
     .cartoon{
-        --dancer-scale:.76;
-        height:390px;
-        margin-bottom:-88px;
+        --dancer-scale:.62;
+        height:342px;
+        margin-bottom:8px;
     }
 
     .touch-button{
@@ -734,9 +734,9 @@ button{
     }
 
     .cartoon{
-        --dancer-scale:.62;
-        height:314px;
-        margin-bottom:-104px;
+        --dancer-scale:.54;
+        height:300px;
+        margin-bottom:12px;
     }
 
     .caption{
@@ -792,7 +792,6 @@ button{
             <div class="hair"></div>
             <div class="face"></div>
             <div class="neck"></div>
-            <div class="headpiece"></div>
             <div class="earring left"></div>
             <div class="earring right"></div>
             <div class="eye left"></div>
