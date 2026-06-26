@@ -251,17 +251,6 @@ button{
     filter:blur(6px);
 }
 
-.veil{
-    position:absolute;
-    width:118px;
-    height:360px;
-    left:140px;
-    top:76px;
-    border-radius:80px 80px 80px 0;
-    background:linear-gradient(88deg, rgba(139,65,43,.34), rgba(210,118,67,.13));
-    transform:skewX(-12deg);
-}
-
 .hair{
     position:absolute;
     width:112px;
@@ -564,8 +553,10 @@ button{
 }
 
 .arm.right{
-    right:38px;
-    transform:rotate(-58deg);
+    right:36px;
+    top:134px;
+    width:104px;
+    transform:rotate(-132deg);
     transform-origin:left center;
 }
 
@@ -574,7 +565,7 @@ button{
 }
 
 .arm.right::after{
-    right:-10px;
+    left:-10px;
 }
 
 .arm.left::before{
@@ -582,7 +573,7 @@ button{
 }
 
 .arm.right::before{
-    right:54px;
+    left:56px;
 }
 
 .caption{
@@ -714,6 +705,7 @@ button{
     .touch-button{
         padding-top:0;
     }
+
 }
 
 @media(max-width:430px){
@@ -788,7 +780,6 @@ button{
     <div class="spark-layer" id="sparkLayer" aria-hidden="true"></div>
     <button class="touch-button" id="openInvitation" type="button">
         <div class="cartoon" aria-hidden="true">
-            <div class="veil"></div>
             <div class="hair"></div>
             <div class="face"></div>
             <div class="neck"></div>
