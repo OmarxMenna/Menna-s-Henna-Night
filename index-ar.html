@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Menna's Bachelorette Party</title>
+<title>ليلة حنة منة</title>
 
 <style>
 
@@ -31,8 +31,9 @@ body{
     min-height:100svh;
     overflow:hidden;
     background:var(--black);
-    font-family:Garamond, Georgia, serif;
+    font-family:"Segoe UI", Tahoma, Arial, sans-serif;
     color:var(--soft);
+    direction:rtl;
 }
 
 button{
@@ -42,7 +43,7 @@ button{
 .language-link{
     position:fixed;
     top:22px;
-    right:22px;
+    left:22px;
     z-index:40;
     color:#ffe0a6;
     text-decoration:none;
@@ -104,9 +105,9 @@ button{
 }
 
 .loading-content h1{
-    font-family:"Brush Script MT", "Segoe Script", cursive;
+    font-family:"Segoe UI", Tahoma, Arial, sans-serif;
     font-size:clamp(4.1rem, 18vw, 7.2rem);
-    font-weight:400;
+    font-weight:700;
     line-height:.9;
     letter-spacing:0;
     background:linear-gradient(92deg, #ffcf58 0%, #f08a39 44%, #aa3228 100%);
@@ -120,7 +121,7 @@ button{
     margin-top:22px;
     font-size:clamp(1.15rem, 4.8vw, 1.75rem);
     font-style:italic;
-    letter-spacing:7px;
+    letter-spacing:1px;
     color:#f0d2ba;
     text-shadow:0 4px 20px rgba(0,0,0,.5);
 }
@@ -592,8 +593,7 @@ button{
     gap:20px;
     color:#d8b775;
     font-size:clamp(.72rem, 2.7vw, .95rem);
-    letter-spacing:10px;
-    text-transform:uppercase;
+    letter-spacing:2px;
 }
 
 .caption::before,
@@ -606,7 +606,7 @@ button{
 .touch-button strong{
     display:block;
     margin-top:4px;
-    font-family:"Brush Script MT", "Segoe Script", cursive;
+    font-family:"Segoe UI", Tahoma, Arial, sans-serif;
     font-size:clamp(3rem, 11vw, 5rem);
     font-weight:400;
     line-height:.95;
@@ -618,8 +618,7 @@ button{
     display:block;
     margin-top:18px;
     font-size:clamp(.8rem, 3vw, 1rem);
-    letter-spacing:9px;
-    text-transform:uppercase;
+    letter-spacing:2px;
     color:rgba(241,215,199,.55);
 }
 
@@ -726,7 +725,7 @@ button{
     }
 
     .loading-content p{
-        letter-spacing:4px;
+        letter-spacing:1px;
     }
 
     .touch-page{
@@ -742,7 +741,7 @@ button{
     .caption{
         gap:12px;
         font-size:.7rem;
-        letter-spacing:5px;
+        letter-spacing:1px;
     }
 
     .touch-button strong{
@@ -752,13 +751,13 @@ button{
     .touch-button span{
         margin-top:14px;
         font-size:.76rem;
-        letter-spacing:5px;
+        letter-spacing:1px;
         line-height:1.5;
     }
 
     .language-link{
         top:16px;
-        right:16px;
+        left:16px;
         padding:8px 12px;
         font-size:.9rem;
     }
@@ -768,12 +767,12 @@ button{
 </head>
 <body>
 
-<a class="language-link" href="index-ar.html">عربي</a>
+<a class="language-link" href="index.html">English</a>
 
-<section class="loading-page" id="loadingPage" aria-label="Loading invitation">
+<section class="loading-page" id="loadingPage" aria-label="تحميل الدعوة">
     <div class="loading-content">
-        <h1>Menna</h1>
-        <p>Bachelorette Night &#128293;</p>
+        <h1>منة</h1>
+        <p>ليلة الحنة &#128293;</p>
         <div class="loading-dots" aria-hidden="true">
             <span></span>
             <span></span>
@@ -782,7 +781,7 @@ button{
     </div>
 </section>
 
-<section class="touch-page" aria-label="Open invitation">
+<section class="touch-page" aria-label="فتح الدعوة">
     <div class="stage-border" aria-hidden="true"></div>
     <div class="stars" aria-hidden="true"></div>
     <div class="spark-layer" id="sparkLayer" aria-hidden="true"></div>
@@ -807,9 +806,9 @@ button{
                 <div class="skirt"></div>
             </div>
         </div>
-        <div class="caption">Last Night Of Freedom</div>
-        <strong>Touch Me</strong>
-        <span>to open your invitation</span>
+        <div class="caption">آخر ليلة حرية</div>
+        <strong>اضغطي هنا</strong>
+        <span>لفتح الدعوة</span>
     </button>
 </section>
 
@@ -861,7 +860,7 @@ openInvitation.addEventListener("click", () => {
     createSparkBurst();
 
     setTimeout(() => {
-        window.location.href = "invitation.html";
+        window.location.href = "invitation-ar.html";
     }, 850);
 });
 

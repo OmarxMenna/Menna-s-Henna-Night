@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Menna's Henna Night Invitation</title>
+<title>دعوة ليلة حنة منة</title>
 
 <style>
 
@@ -33,14 +33,15 @@ body{
     min-height:100vh;
     overflow-x:hidden;
     background:var(--black);
-    font-family:Garamond, Georgia, serif;
+    font-family:"Segoe UI", Tahoma, Arial, sans-serif;
     color:var(--soft);
+    direction:rtl;
 }
 
 .language-link{
     position:fixed;
     top:18px;
-    right:18px;
+    left:18px;
     z-index:25;
     color:#ffe0a6;
     text-decoration:none;
@@ -141,9 +142,9 @@ body{
 }
 
 .hero h1{
-    font-family:"Brush Script MT", "Segoe Script", cursive;
+    font-family:"Segoe UI", Tahoma, Arial, sans-serif;
     font-size:clamp(3.8rem, 16vw, 7.5rem);
-    font-weight:400;
+    font-weight:800;
     line-height:.88;
     letter-spacing:0;
     background:linear-gradient(92deg, #ffdf78 0%, #f0aa42 46%, #b94131 100%);
@@ -220,8 +221,7 @@ body{
     margin-top:12px;
     color:#f1d7c7;
     font-size:.86rem;
-    letter-spacing:3px;
-    text-transform:uppercase;
+    letter-spacing:1px;
 }
 
 .game-card{
@@ -350,8 +350,7 @@ body{
 .rsvp-kicker{
     color:rgba(213,166,82,.82);
     font-size:.86rem;
-    letter-spacing:8px;
-    text-transform:uppercase;
+    letter-spacing:1px;
     margin-bottom:18px;
 }
 
@@ -388,7 +387,7 @@ body{
 .rsvp-form{
     display:grid;
     gap:18px;
-    text-align:left;
+    text-align:right;
 }
 
 .rsvp-field{
@@ -399,7 +398,7 @@ body{
 .rsvp-field label{
     color:#d8b775;
     font-weight:bold;
-    letter-spacing:2px;
+    letter-spacing:1px;
 }
 
 .rsvp-field input,
@@ -442,9 +441,8 @@ body{
     color:#fff3c4;
     cursor:pointer;
     font-weight:bold;
-    letter-spacing:5px;
+    letter-spacing:1px;
     line-height:1.5;
-    text-transform:uppercase;
     box-shadow:0 14px 28px rgba(0,0,0,.28), inset 0 0 28px rgba(199,46,45,.08);
 }
 
@@ -479,8 +477,7 @@ body{
     color:rgba(216,183,117,.72);
     cursor:pointer;
     font-size:.82rem;
-    letter-spacing:3px;
-    text-transform:uppercase;
+    letter-spacing:1px;
 }
 
 .owner-unlock:hover{
@@ -492,7 +489,7 @@ body{
     margin-top:24px;
     padding-top:22px;
     border-top:1px solid rgba(213,166,82,.22);
-    text-align:left;
+    text-align:right;
 }
 
 .guest-list.is-visible{
@@ -526,8 +523,7 @@ body{
 .guest-list span{
     color:#d8b775;
     font-size:.82rem;
-    letter-spacing:2px;
-    text-transform:uppercase;
+    letter-spacing:1px;
     white-space:nowrap;
 }
 
@@ -563,9 +559,9 @@ body{
     z-index:1;
     width:min(820px, 100%);
     margin:0 auto;
-    font-family:"Brush Script MT", "Segoe Script", cursive;
+    font-family:"Segoe UI", Tahoma, Arial, sans-serif;
     font-size:clamp(2.1rem, 7vw, 4.2rem);
-    font-weight:normal;
+    font-weight:600;
     line-height:1.45;
     color:#f8e2b8;
     text-shadow:
@@ -656,7 +652,7 @@ body{
     }
 
     .rsvp-kicker{
-        letter-spacing:5px;
+        letter-spacing:1px;
     }
 
     .rsvp-copy{
@@ -680,7 +676,7 @@ body{
 
     .rsvp-submit{
         min-height:132px;
-        letter-spacing:3px;
+        letter-spacing:1px;
     }
 
     .rsvp-submit::before{
@@ -716,7 +712,7 @@ body{
 
     .language-link{
         top:14px;
-        right:14px;
+        left:14px;
         padding:8px 12px;
         font-size:.9rem;
     }
@@ -737,93 +733,93 @@ body{
 <body>
 
 <audio id="partySong" src="song.mp3" preload="auto" loop></audio>
-<a class="language-link" href="invitation-ar.html">عربي</a>
-<button class="music-button" id="musicButton" type="button" aria-label="Play music">&#9654; Play Music</button>
+<a class="language-link" href="invitation.html">English</a>
+<button class="music-button" id="musicButton" type="button" aria-label="تشغيل الموسيقى">&#9654; تشغيل الموسيقى</button>
 
 <main class="site" id="invitation">
 
     <section class="hero">
         <div class="hero-content">
-            <h1>Menna's Henna Night</h1>
-            <h2>Join us for a burgundy and black celebration</h2>
-            <p>Celebrating love, joy, and tradition</p>
+            <h1>ليلة حنة منة</h1>
+            <h2>انضموا إلينا في احتفال بالعنابي والأسود</h2>
+            <p>نحتفل بالحب والفرحة والتقاليد</p>
         </div>
     </section>
 
     <section class="countdown-section">
-        <h2 class="countdown-title">Countdown To Henna Night</h2>
+        <h2 class="countdown-title">العد التنازلي لليلة الحنة</h2>
 
         <div class="countdown">
             <div class="box">
                 <span id="days">00</span>
-                <p>Days</p>
+                <p>يوم</p>
             </div>
 
             <div class="box">
                 <span id="hours">00</span>
-                <p>Hours</p>
+                <p>ساعة</p>
             </div>
 
             <div class="box">
                 <span id="minutes">00</span>
-                <p>Minutes</p>
+                <p>دقيقة</p>
             </div>
 
             <div class="box">
                 <span id="seconds">00</span>
-                <p>Seconds</p>
+                <p>ثانية</p>
             </div>
         </div>
     </section>
 
     <section class="details">
-        <h2>Event Details</h2>
+        <h2>تفاصيل المناسبة</h2>
 
         <div class="detail-card">
-            <p>&#128197; 11 July 2026</p>
-            <p>&#128338; 6:00 PM</p>
-            <p>&#127968; Home</p>
-            <p>&#128205; <a href="https://maps.app.goo.gl/JqVXKKG3ZmG43tNh6" target="_blank" rel="noopener">Villa 61, Diplomatic Compound, New Cairo</a></p>
-            <p>&#10024; Dress Code: Burgundy and Black</p>
+            <p>&#128197; ١١ يوليو ٢٠٢٦</p>
+            <p>&#128338; ٦:٠٠ مساء</p>
+            <p>&#127968; في البيت</p>
+            <p>&#128205; <a href="https://maps.app.goo.gl/JqVXKKG3ZmG43tNh6" target="_blank" rel="noopener">فيلا ٦١، الدبلوماسيين، التجمع الخامس</a></p>
+            <p>&#10024; اللبس: عنابي وأسود</p>
         </div>
     </section>
 
     <section class="rsvp" id="rsvp">
-        <p class="rsvp-kicker">Are You In?</p>
-        <h2>Join The Chaos <span class="title-kiss" aria-label="kiss"></span></h2>
-        <p class="rsvp-copy">Let us know if you're coming to Menna's last night of freedom before 11 July 2026.</p>
+        <p class="rsvp-kicker">هتكوني معانا؟</p>
+        <h2>انضمي للفرحة <span class="title-kiss" aria-label="قبلة"></span></h2>
+        <p class="rsvp-copy">خبرينا لو هتحضري آخر ليلة حرية لمنة قبل ١١ يوليو ٢٠٢٦.</p>
 
         <div class="rsvp-card">
             <form class="rsvp-form" id="rsvpForm">
                 <div class="rsvp-field">
-                    <label for="guestName">Your Name</label>
-                    <input id="guestName" name="guestName" type="text" placeholder="e.g. Layla" autocomplete="name" required>
+                    <label for="guestName">اسمك</label>
+                    <input id="guestName" name="guestName" type="text" placeholder="مثال: ليلى" autocomplete="name" required>
                 </div>
 
                 <div class="rsvp-field">
-                    <label for="guestAnswer">Will You Attend?</label>
+                    <label for="guestAnswer">هتحضري؟</label>
                     <select id="guestAnswer" name="guestAnswer" required>
-                        <option value="in">YES, let's cause some chaos!</option>
-                        <option value="maybe">Maybe, save me a sparkle</option>
-                        <option value="out">Can't make it this time</option>
+                        <option value="in">أيوه، هاجي نفرح سوا!</option>
+                        <option value="maybe">ممكن، احجزولي لمعة</option>
+                        <option value="out">مش هقدر أجي المرة دي</option>
                     </select>
                 </div>
 
-                <button class="rsvp-submit" type="submit">Tap To Seal With A Kiss</button>
+                <button class="rsvp-submit" type="submit">اضغطي لتأكيد الحضور بقبلة</button>
                 <p class="rsvp-status" id="rsvpStatus" aria-live="polite"></p>
             </form>
 
-            <button class="owner-unlock" id="ownerUnlock" type="button">Owner View</button>
+            <button class="owner-unlock" id="ownerUnlock" type="button">عرض خاص</button>
 
             <div class="guest-list" id="guestListPanel" aria-live="polite">
-                <h3 id="guestListTitle">Who's In</h3>
+                <h3 id="guestListTitle">مين جاية</h3>
                 <ul id="guestList"></ul>
             </div>
         </div>
     </section>
 
     <footer class="footer">
-        <p class="footer-quote">She says goodbye to freedom, but hello to a lifetime of love.</p>
+        <p class="footer-quote">تودّع الحرية، وتقول مرحبًا لعمرٍ من الحب.</p>
     </footer>
 
 </main>
@@ -890,16 +886,16 @@ musicButton.addEventListener("click", () => {
 });
 
 ownerUnlock.addEventListener("click", () => {
-    const code = window.prompt("Owner code");
+    const code = window.prompt("الكود الخاص");
 
     if(code === ownerCode){
         guestListPanel.classList.add("is-visible");
-        ownerUnlock.textContent = "Owner View Open";
+        ownerUnlock.textContent = "العرض الخاص مفتوح";
         renderGuests();
         return;
     }
 
-    rsvpStatus.textContent = "Owner view stays hidden.";
+    rsvpStatus.textContent = "العرض الخاص سيظل مخفيًا.";
 });
 
 function getGuests(){
@@ -917,25 +913,25 @@ function saveGuests(guests){
 
 function getAnswerLabel(answer){
     if(answer === "in"){
-        return "Coming";
+        return "جاية";
     }
 
     if(answer === "maybe"){
-        return "Maybe";
+        return "ممكن";
     }
 
-    return "Can't Make It";
+    return "مش هتحضر";
 }
 
 function renderGuests(){
     const guests = getGuests();
     const guestsIn = guests.filter((guest) => guest.answer === "in");
-    guestListTitle.textContent = `Who's In (${guestsIn.length})`;
+    guestListTitle.textContent = `مين جاية (${guestsIn.length})`;
     guestList.innerHTML = "";
 
     if(guests.length === 0){
         const emptyItem = document.createElement("li");
-        emptyItem.textContent = "No kisses sealed yet.";
+        emptyItem.textContent = "لسه مفيش تأكيد حضور.";
         guestList.appendChild(emptyItem);
         return;
     }
@@ -959,7 +955,7 @@ rsvpForm.addEventListener("submit", (event) => {
     const answer = guestAnswer.value;
 
     if(!name){
-        rsvpStatus.textContent = "Add your name first, then seal it.";
+        rsvpStatus.textContent = "اكتبي اسمك الأول وبعدين أكدي.";
         guestName.focus();
         return;
     }
@@ -970,11 +966,11 @@ rsvpForm.addEventListener("submit", (event) => {
 
     if(existingGuestIndex >= 0){
         guests[existingGuestIndex] = nextGuest;
-        rsvpStatus.textContent = "Updated. Your answer is sealed.";
+        rsvpStatus.textContent = "تم التحديث. إجابتك اتأكدت.";
     }
     else{
         guests.push(nextGuest);
-        rsvpStatus.textContent = "Sealed with a kiss. You're on the list.";
+        rsvpStatus.textContent = "اتأكدت بقبلة. اسمك اتسجل.";
     }
 
     saveGuests(guests);
