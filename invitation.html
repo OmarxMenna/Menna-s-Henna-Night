@@ -217,7 +217,7 @@ body{
     align-items:center;
     justify-content:center;
     padding:0 22px;
-    overflow:hidden;
+    overflow:visible;
     border:0;
     border-radius:0;
     background:transparent;
@@ -253,6 +253,7 @@ body{
 }
 
 .box p{
+    display:block;
     position:relative;
     z-index:1;
     margin-top:8px;
@@ -260,6 +261,11 @@ body{
     font-size:.88rem;
     letter-spacing:.08em;
     text-transform:none;
+}
+
+.unlocked-countdown .box p{
+    opacity:1;
+    transform:none;
 }
 .game-card{
     max-width:520px;
@@ -982,17 +988,28 @@ body{
     }
 
     .unlocked-countdown .countdown{
-        flex-wrap:wrap;
-        row-gap:18px;
+        flex-wrap:nowrap;
+        width:100%;
     }
 
     .box{
-        flex:0 0 50%;
+        flex:1 1 25%;
+        min-height:64px;
         min-width:0;
-        padding:0 12px;
+        padding:0 8px 4px;
     }
 
-    .box:nth-child(2)::after,
+    .box span{
+        font-size:clamp(1.65rem, 10vw, 2.15rem);
+    }
+
+    .box p{
+        margin-top:7px;
+        font-size:.68rem;
+        line-height:1.2;
+        letter-spacing:.04em;
+    }
+
     .box:last-child::after{
         display:none;
     }
@@ -1120,7 +1137,7 @@ body{
 
             <div class="unlocked-details" id="unlockedDetails" aria-live="polite">
                 <p data-detail>11 July 2026</p>
-                <p data-detail>5:00 PM</p>
+                <p data-detail>5:30 PM</p>
                 <p class="location-detail" data-detail><img class="location-icon" src="location.png" alt="" aria-hidden="true"><a href="https://maps.app.goo.gl/JqVXKKG3ZmG43tNh6" target="_blank" rel="noopener">Villa 61, Diplomatic Compound, New Cairo</a></p>
                 <p data-detail>Dress Code: Seductive</p>
                 <div class="unlocked-countdown" id="unlockedCountdown">
@@ -1129,22 +1146,22 @@ body{
                     <div class="countdown">
                         <div class="box">
                             <span id="days">00</span>
-                            <p>Days</p>
+                            <p>days</p>
                         </div>
 
                         <div class="box">
                             <span id="hours">00</span>
-                            <p>Hours</p>
+                            <p>hours</p>
                         </div>
 
                         <div class="box">
                             <span id="minutes">00</span>
-                            <p>Min</p>
+                            <p>min</p>
                         </div>
 
                         <div class="box">
                             <span id="seconds">00</span>
-                            <p>Sec</p>
+                            <p>sec</p>
                         </div>
                     </div>
                 </div>
@@ -1194,7 +1211,7 @@ body{
 
 <script>
 
-const targetDate = new Date("2026-07-11T17:00:00+03:00").getTime();
+const targetDate = new Date("2026-07-11T17:30:00+03:00").getTime();
 const partySong = document.getElementById("partySong");
 const musicButton = document.getElementById("musicButton");
 const rsvpForm = document.getElementById("rsvpForm");
