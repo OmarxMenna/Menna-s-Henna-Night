@@ -132,11 +132,13 @@ body{
 }
 
 .hero h1{
-    font-family:"Segoe UI", Tahoma, Arial, sans-serif;
+    display:inline-block;
+    font-family:Tahoma, Arial, "Segoe UI", sans-serif;
     font-size:clamp(3.8rem, 16vw, 7.5rem);
-    font-weight:800;
-    line-height:.88;
+    font-weight:700;
+    line-height:1.15;
     letter-spacing:0;
+    padding:.04em 0 .12em;
     background:linear-gradient(92deg, #ffdf78 0%, #f0aa42 46%, #b94131 100%);
     -webkit-background-clip:text;
     background-clip:text;
@@ -186,43 +188,70 @@ body{
 }
 
 .countdown{
-    display:grid;
-    grid-template-columns:repeat(4, minmax(104px, 1fr));
+    display:flex;
+    align-items:flex-end;
     justify-content:center;
     gap:0;
-    width:min(720px, 100%);
+    width:min(620px, 100%);
     margin:0 auto;
-    overflow:hidden;
-    border:1px solid rgba(213,166,82,.5);
-    border-radius:8px;
-    background:linear-gradient(135deg, rgba(5,5,5,.72), rgba(83,24,31,.54));
-    box-shadow:0 22px 52px rgba(0,0,0,.36);
+    overflow:visible;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    box-shadow:none;
 }
 
 .box{
-    min-height:118px;
-    padding:24px 18px 22px;
-    border-right:1px solid rgba(213,166,82,.28);
-    background:rgba(255,255,255,.025);
+    position:relative;
+    min-height:0;
+    min-width:112px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:0 22px;
+    overflow:hidden;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    box-shadow:none;
 }
 
-.box:last-child{
-    border-right:0;
+.box::after{
+    content:"";
+    position:absolute;
+    top:16%;
+    left:0;
+    bottom:12%;
+    width:1px;
+    background:linear-gradient(180deg, transparent, rgba(213,166,82,.62), transparent);
+}
+
+.box:last-child::after{
+    display:none;
 }
 
 .box span{
     display:block;
-    font-size:clamp(2.1rem, 5vw, 3.15rem);
-    font-weight:bold;
-    color:white;
+    position:relative;
+    z-index:1;
+    min-width:2.15ch;
+    font-family:Garamond, Georgia, serif;
+    font-size:clamp(2.3rem, 5vw, 3.45rem);
+    font-weight:400;
+    color:#ffe0a6;
     line-height:1;
+    font-variant-numeric:tabular-nums;
+    text-shadow:0 6px 18px rgba(0,0,0,.36), 0 0 20px rgba(213,166,82,.22);
 }
 
 .box p{
-    margin-top:12px;
-    color:#f1d7c7;
-    font-size:.86rem;
-    letter-spacing:1px;
+    position:relative;
+    z-index:1;
+    margin-top:8px;
+    color:#d5a652;
+    font-size:.88rem;
+    letter-spacing:0;
 }
 
 .game-card{
@@ -320,17 +349,37 @@ body{
 .detail-card{
     max-width:620px;
     margin:auto;
-    background:rgba(5,5,5,.72);
-    padding:34px;
-    border:1px solid rgba(213,166,82,.5);
-    border-radius:8px;
-    box-shadow:0 18px 45px rgba(0,0,0,.34);
+    padding:34px 20px;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    box-shadow:none;
+    text-align:center;
 }
 
 .detail-card p{
     margin:15px 0;
     font-size:1.12rem;
     color:#f9ede8;
+}
+
+.location-detail{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    line-height:1.5;
+}
+
+.location-icon{
+    width:34px;
+    height:34px;
+    object-fit:contain;
+    flex:0 0 auto;
+}
+
+.location-detail a{
+    overflow-wrap:anywhere;
 }
 
 .detail-card a{
@@ -630,6 +679,26 @@ body{
         padding:28px 14px 24px;
     }
 
+    .countdown{
+        flex-wrap:wrap;
+        row-gap:18px;
+    }
+
+    .box{
+        flex:0 0 50%;
+        min-width:0;
+        padding:0 12px;
+    }
+
+    .box:nth-child(2)::after,
+    .box:last-child::after{
+        display:none;
+    }
+
+    .detail-card{
+        padding:26px 20px;
+    }
+
     .detail-card{
         padding:26px 20px;
     }
@@ -679,6 +748,11 @@ body{
 
     .game-board{
         gap:10px;
+    }
+
+    .detail-card p{
+        font-size:1rem;
+        line-height:1.55;
     }
 
     .detail-card p{
@@ -755,14 +829,12 @@ body{
     </section>
 
     <section class="details">
-        <h2>تفاصيل الليلة</h2>
+        <h2>تفاصيل المناسبة</h2>
 
         <div class="detail-card">
-            <p>&#128197; 11 يوليو 2026</p>
-            <p>&#128338; 6:00 مساء</p>
-            <p>&#127968; في البيت</p>
-            <p>&#128205; <a href="https://maps.app.goo.gl/JqVXKKG3ZmG43tNh6" target="_blank" rel="noopener">فيلا 61، كمبوند الدبلوماسيين، التجمع الخامس</a></p>
-            <p>&#10024; الدريس كود: شيك وجريء</p>
+            <p>١١ يوليو ٢٠٢٦</p>
+            <p>٥:٠٠ مساء</p>
+            <p class="location-detail"><img class="location-icon" src="location.png" alt="" aria-hidden="true"><a href="https://maps.app.goo.gl/JqVXKKG3ZmG43tNh6" target="_blank" rel="noopener">فيلا ٦١، الدبلوماسيين، التجمع الخامس</a></p>
         </div>
     </section>
 

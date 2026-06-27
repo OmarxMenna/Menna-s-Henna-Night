@@ -131,11 +131,13 @@ body{
 }
 
 .hero h1{
+    display:inline-block;
     font-family:"Brush Script MT", "Segoe Script", cursive;
     font-size:clamp(3.8rem, 16vw, 7.5rem);
     font-weight:400;
-    line-height:.88;
+    line-height:1.08;
     letter-spacing:0;
+    padding:.03em 0 .1em;
     background:linear-gradient(92deg, #ffdf78 0%, #f0aa42 46%, #b94131 100%);
     -webkit-background-clip:text;
     background-clip:text;
@@ -193,44 +195,71 @@ body{
 }
 
 .countdown{
-    display:grid;
-    grid-template-columns:repeat(4, minmax(104px, 1fr));
+    display:flex;
+    align-items:flex-end;
     justify-content:center;
     gap:0;
-    width:min(720px, 100%);
+    width:min(620px, 100%);
     margin:0 auto;
-    overflow:hidden;
-    border:1px solid rgba(213,166,82,.5);
-    border-radius:8px;
-    background:linear-gradient(135deg, rgba(5,5,5,.72), rgba(83,24,31,.54));
-    box-shadow:0 22px 52px rgba(0,0,0,.36);
+    overflow:visible;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    box-shadow:none;
 }
 
 .box{
-    min-height:118px;
-    padding:24px 18px 22px;
-    border-right:1px solid rgba(213,166,82,.28);
-    background:rgba(255,255,255,.025);
+    position:relative;
+    min-height:0;
+    min-width:112px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:0 22px;
+    overflow:hidden;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    box-shadow:none;
 }
 
-.box:last-child{
-    border-right:0;
+.box::after{
+    content:"";
+    position:absolute;
+    top:16%;
+    right:0;
+    bottom:12%;
+    width:1px;
+    background:linear-gradient(180deg, transparent, rgba(213,166,82,.62), transparent);
+}
+
+.box:last-child::after{
+    display:none;
 }
 
 .box span{
     display:block;
-    font-size:clamp(2.1rem, 5vw, 3.15rem);
-    font-weight:bold;
-    color:white;
+    position:relative;
+    z-index:1;
+    min-width:2.15ch;
+    font-family:Garamond, Georgia, serif;
+    font-size:clamp(2.3rem, 5vw, 3.45rem);
+    font-weight:400;
+    color:#ffe0a6;
     line-height:1;
+    font-variant-numeric:tabular-nums;
+    text-shadow:0 6px 18px rgba(0,0,0,.36), 0 0 20px rgba(213,166,82,.22);
 }
 
 .box p{
-    margin-top:12px;
-    color:#f1d7c7;
-    font-size:.86rem;
-    letter-spacing:3px;
-    text-transform:uppercase;
+    position:relative;
+    z-index:1;
+    margin-top:8px;
+    color:#d5a652;
+    font-size:.88rem;
+    letter-spacing:.08em;
+    text-transform:none;
 }
 .game-card{
     max-width:520px;
@@ -324,31 +353,310 @@ body{
     border-color:white;
 }
 
-.detail-card{
+.detail-game{
+    width:min(880px, 100%);
+    margin:0 auto;
+    text-align:center;
+}
+
+.detail-game-text{
     max-width:620px;
-    margin:auto;
-    background:rgba(5,5,5,.72);
-    padding:34px;
-    border:1px solid rgba(213,166,82,.5);
-    border-radius:8px;
-    box-shadow:0 18px 45px rgba(0,0,0,.34);
-}
-
-.detail-card p{
-    margin:15px 0;
+    margin:0 auto 28px;
+    color:#f1d7c7;
     font-size:1.12rem;
-    color:#f9ede8;
+    line-height:1.7;
 }
 
-.detail-card a{
+.jewelry-stage{
+    position:relative;
+    min-height:380px;
+    display:grid;
+    place-items:center;
+    overflow:hidden;
+    border:1px solid rgba(213,166,82,.42);
+    border-radius:8px;
+    background:
+        radial-gradient(circle at 50% 24%, rgba(255,224,166,.18), transparent 24%),
+        linear-gradient(150deg, rgba(5,5,5,.42), rgba(83,24,31,.34));
+    box-shadow:0 22px 52px rgba(0,0,0,.32);
+}
+
+.jewelry-box{
+    position:relative;
+    z-index:3;
+    width:min(230px, 62vw);
+    height:176px;
+    border:0;
+    background:transparent;
+    cursor:pointer;
+    perspective:800px;
+    transition:transform .6s ease, opacity .45s ease;
+}
+
+.box-lid,
+.box-base{
+    position:absolute;
+    left:0;
+    width:100%;
+    border:1px solid rgba(255,224,166,.72);
+    background:
+        radial-gradient(circle at 50% 18%, rgba(255,232,166,.38), transparent 24%),
+        linear-gradient(145deg, #8c2634, #4a111a 62%, #1b070d);
+    box-shadow:
+        inset 0 0 24px rgba(255,224,166,.12),
+        0 18px 34px rgba(0,0,0,.38);
+}
+
+.box-lid{
+    top:18px;
+    height:70px;
+    border-radius:64px 64px 14px 14px;
+    transform-origin:50% 100%;
+    transition:transform .8s cubic-bezier(.2,.78,.18,1), top .8s ease;
+}
+
+.box-base{
+    bottom:18px;
+    height:92px;
+    border-radius:16px 16px 42px 42px;
+}
+
+.box-glow{
+    position:absolute;
+    inset:58px 32px auto;
+    height:62px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(255,228,137,.72), rgba(213,166,82,.08) 62%, transparent 70%);
+    opacity:.58;
+    filter:blur(5px);
+    transition:opacity .6s ease, transform .6s ease;
+}
+
+.box-jewel{
+    position:absolute;
+    left:50%;
+    top:78px;
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    background:linear-gradient(135deg, #fff7c8, #d5a652 58%, #8d621b);
+    box-shadow:0 0 22px rgba(255,224,166,.68);
+    transform:translateX(-50%);
+}
+
+.jewelry-box.is-open{
+    pointer-events:none;
+    opacity:0;
+    transform:translateY(-96px) scale(.62);
+}
+
+.jewelry-box.is-open .box-lid{
+    top:-6px;
+    transform:rotateX(-64deg);
+}
+
+.jewelry-box.is-open .box-glow{
+    opacity:1;
+    transform:scale(1.45);
+}
+
+.jewelry-items{
+    position:absolute;
+    inset:54px 34px 34px;
+    display:grid;
+    grid-template-columns:repeat(4, minmax(62px, 1fr));
+    gap:14px;
+    align-content:center;
+    opacity:0;
+    pointer-events:none;
+    transform:translateY(18px) scale(.96);
+    transition:opacity .55s ease, transform .55s ease;
+}
+
+.jewelry-items.is-visible{
+    opacity:1;
+    pointer-events:auto;
+    transform:translateY(0) scale(1);
+}
+
+.jewelry-item{
+    min-height:76px;
+    border:1px solid rgba(213,166,82,.38);
+    border-radius:8px;
+    background:
+        radial-gradient(circle at 50% 25%, rgba(255,224,166,.22), transparent 34%),
+        rgba(5,5,5,.42);
+    color:#ffe0a6;
+    cursor:pointer;
+    font-size:2rem;
+    box-shadow:0 14px 26px rgba(0,0,0,.26);
+    opacity:0;
+    transform:translateY(16px) scale(.92);
+    transition:opacity .35s ease, transform .35s ease, border-color .25s ease;
+}
+
+.jewelry-items.is-visible .jewelry-item{
+    opacity:1;
+    transform:translateY(0) scale(1);
+    transition-delay:calc(var(--item-index) * 55ms);
+}
+
+.jewelry-item:hover{
+    border-color:rgba(255,224,166,.8);
+    transform:translateY(-3px) scale(1.03);
+}
+
+.jewelry-item.is-wrong{
+    animation:itemShake .38s ease, wrongSparkle .7s ease;
+}
+
+.jewelry-item.is-correct{
+    position:relative;
+    z-index:5;
+    animation:ringCenter 1.05s ease forwards;
+    border-color:#fff3b8;
+    background:radial-gradient(circle, rgba(255,224,166,.38), rgba(83,24,31,.58));
+}
+
+.detail-game-message{
+    min-height:28px;
+    margin-top:18px;
+    color:#ffe0a6;
+    font-size:1.04rem;
+}
+
+.detail-sparkles{
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+}
+
+.detail-sparkle{
+    position:absolute;
+    left:var(--x);
+    top:var(--y);
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    background:#ffe0a6;
+    box-shadow:0 0 18px #d5a652;
+    animation:sparkFly 1s ease-out forwards;
+}
+
+.detail-confetti{
+    position:absolute;
+    left:var(--x);
+    top:-16px;
+    width:8px;
+    height:14px;
+    border-radius:2px;
+    background:var(--color);
+    animation:confettiFall 1.7s ease-in forwards;
+}
+
+.unlocked-details{
+    display:none;
+    max-width:760px;
+    margin:28px auto 0;
+    text-align:center;
+}
+
+.unlocked-details.is-visible{
+    display:grid;
+    gap:14px;
+    justify-items:center;
+}
+
+.unlocked-details p{
+    margin:0;
+    padding:0;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    color:#f9ede8;
+    font-size:1.08rem;
+    opacity:0;
+    transform:translateY(12px);
+}
+
+.location-detail{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    line-height:1.5;
+}
+
+.location-icon{
+    width:34px;
+    height:34px;
+    object-fit:contain;
+    flex:0 0 auto;
+}
+
+.location-detail a{
+    overflow-wrap:anywhere;
+}
+
+.unlocked-details p.is-visible{
+    animation:detailFadeIn .55s ease forwards;
+}
+
+.unlocked-countdown{
+    display:none;
+    margin:20px auto 0;
+    opacity:0;
+    transform:translateY(12px);
+}
+
+.unlocked-countdown.is-visible{
+    display:grid;
+    animation:detailFadeIn .55s ease forwards;
+}
+
+.unlocked-countdown .countdown-title{
+    margin-bottom:18px;
+    font-size:clamp(1.5rem, 4vw, 2.25rem);
+}
+
+.unlocked-details a{
     color:#ffe0a6;
     text-decoration:none;
     border-bottom:1px solid rgba(213,166,82,.55);
 }
 
-.detail-card a:hover{
-    color:white;
-    border-bottom-color:white;
+@keyframes itemShake{
+    0%, 100%{ transform:translateX(0); }
+    25%{ transform:translateX(-5px) rotate(-2deg); }
+    50%{ transform:translateX(5px) rotate(2deg); }
+    75%{ transform:translateX(-3px) rotate(-1deg); }
+}
+
+@keyframes wrongSparkle{
+    0%, 100%{ box-shadow:0 14px 26px rgba(0,0,0,.26); }
+    45%{ box-shadow:0 0 24px rgba(255,224,166,.75), 0 14px 26px rgba(0,0,0,.26); }
+}
+
+@keyframes ringCenter{
+    45%{ transform:scale(1.45); }
+    100%{ transform:translate(var(--move-x), var(--move-y)) scale(1.8); }
+}
+
+@keyframes sparkFly{
+    from{ opacity:1; transform:translate(-50%, -50%) scale(.35); }
+    to{ opacity:0; transform:translate(calc(var(--dx) * 1px), calc(var(--dy) * 1px)) scale(1.35); }
+}
+
+@keyframes confettiFall{
+    to{ opacity:0; transform:translateY(470px) rotate(420deg); }
+}
+
+@keyframes detailFadeIn{
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
 .rsvp{
@@ -641,8 +949,52 @@ body{
         padding:28px 14px 24px;
     }
 
-    .detail-card{
-        padding:26px 20px;
+    .detail-game-text{
+        font-size:1rem;
+    }
+
+    .jewelry-stage{
+        min-height:500px;
+    }
+
+    .jewelry-box{
+        width:min(190px, 58vw);
+        height:150px;
+    }
+
+    .jewelry-box.is-open{
+        transform:translateY(-130px) scale(.58);
+    }
+
+    .jewelry-items{
+        inset:96px 14px 18px;
+        grid-template-columns:repeat(3, 1fr);
+        gap:10px;
+    }
+
+    .jewelry-item{
+        min-height:68px;
+        font-size:1.75rem;
+    }
+
+    .unlocked-details p{
+        font-size:1rem;
+    }
+
+    .unlocked-countdown .countdown{
+        flex-wrap:wrap;
+        row-gap:18px;
+    }
+
+    .box{
+        flex:0 0 50%;
+        min-width:0;
+        padding:0 12px;
+    }
+
+    .box:nth-child(2)::after,
+    .box:last-child::after{
+        display:none;
     }
 
     .rsvp-kicker{
@@ -692,11 +1044,6 @@ body{
         gap:10px;
     }
 
-    .detail-card p{
-        font-size:1rem;
-        line-height:1.55;
-    }
-
     .music-button{
         right:14px;
         bottom:14px;
@@ -739,41 +1086,69 @@ body{
         </div>
     </section>
 
-    <section class="countdown-section">
-        <h2 class="countdown-title">Countdown To Henna Night</h2>
-
-        <div class="countdown">
-            <div class="box">
-                <span id="days">00</span>
-                <p>Days</p>
-            </div>
-
-            <div class="box">
-                <span id="hours">00</span>
-                <p>Hours</p>
-            </div>
-
-            <div class="box">
-                <span id="minutes">00</span>
-                <p>Mins</p>
-            </div>
-
-            <div class="box">
-                <span id="seconds">00</span>
-                <p>Secs</p>
-            </div>
-        </div>
-    </section>
-
     <section class="details">
-        <h2>Event Details</h2>
+        <div class="detail-game" id="detailGame">
+            <p class="detail-game-text">Oops! Menna's engagement ring is missing. Find it to unlock the Henna Night details.</p>
 
-        <div class="detail-card">
-            <p>&#128197; 11 July 2026</p>
-            <p>&#128338; 6:00 PM</p>
-            <p>&#127968; Home</p>
-            <p>&#128205; <a href="https://maps.app.goo.gl/JqVXKKG3ZmG43tNh6" target="_blank" rel="noopener">Villa 61, Diplomatic Compound, New Cairo</a></p>
-            <p>&#10024; Dress code: Seductive</p>
+            <div class="jewelry-stage">
+                <button class="jewelry-box" id="jewelryBox" type="button" aria-label="Open jewelry box">
+                    <span class="box-lid"></span>
+                    <span class="box-glow"></span>
+                    <span class="box-base"></span>
+                    <span class="box-jewel"></span>
+                </button>
+
+                <div class="jewelry-items" id="jewelryItems" aria-label="Jewelry items">
+                    <button class="jewelry-item" style="--item-index:0" type="button" data-correct="false" aria-label="Pearl earrings">💎</button>
+                    <button class="jewelry-item" style="--item-index:1" type="button" data-correct="false" aria-label="Gold bracelet">📿</button>
+                    <button class="jewelry-item" style="--item-index:2" type="button" data-correct="false" aria-label="Ruby necklace">♦</button>
+                    <button class="jewelry-item" style="--item-index:3" type="button" data-correct="false" aria-label="Diamond earrings">✨</button>
+                    <button class="jewelry-item" style="--item-index:4" type="button" data-correct="false" aria-label="Gold necklace">📿</button>
+                    <button class="jewelry-item" style="--item-index:5" type="button" data-correct="true" aria-label="Engagement ring">💍</button>
+                    <button class="jewelry-item" style="--item-index:6" type="button" data-correct="false" aria-label="Gemstone ring">💠</button>
+                    <button class="jewelry-item" style="--item-index:7" type="button" data-correct="false" aria-label="Gold earrings">🔸</button>
+                    <button class="jewelry-item" style="--item-index:8" type="button" data-correct="false" aria-label="Pearl necklace">⚪</button>
+                    <button class="jewelry-item" style="--item-index:9" type="button" data-correct="false" aria-label="Sapphire bracelet">🔹</button>
+                    <button class="jewelry-item" style="--item-index:10" type="button" data-correct="false" aria-label="Charm bracelet">🌙</button>
+                    <button class="jewelry-item" style="--item-index:11" type="button" data-correct="false" aria-label="Gold brooch">✦</button>
+                </div>
+
+                <div class="detail-sparkles" id="detailSparkles" aria-hidden="true"></div>
+            </div>
+
+            <p class="detail-game-message" id="detailGameMessage" aria-live="polite"></p>
+
+            <div class="unlocked-details" id="unlockedDetails" aria-live="polite">
+                <p data-detail>11 July 2026</p>
+                <p data-detail>5:00 PM</p>
+                <p class="location-detail" data-detail><img class="location-icon" src="location.png" alt="" aria-hidden="true"><a href="https://maps.app.goo.gl/JqVXKKG3ZmG43tNh6" target="_blank" rel="noopener">Villa 61, Diplomatic Compound, New Cairo</a></p>
+                <p data-detail>Dress Code: Seductive</p>
+                <div class="unlocked-countdown" id="unlockedCountdown">
+                    <h2 class="countdown-title">Countdown To Henna Night</h2>
+
+                    <div class="countdown">
+                        <div class="box">
+                            <span id="days">00</span>
+                            <p>Days</p>
+                        </div>
+
+                        <div class="box">
+                            <span id="hours">00</span>
+                            <p>Hours</p>
+                        </div>
+
+                        <div class="box">
+                            <span id="minutes">00</span>
+                            <p>Min</p>
+                        </div>
+
+                        <div class="box">
+                            <span id="seconds">00</span>
+                            <p>Sec</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -819,7 +1194,7 @@ body{
 
 <script>
 
-const targetDate = new Date("2026-07-11T18:00:00+03:00").getTime();
+const targetDate = new Date("2026-07-11T17:00:00+03:00").getTime();
 const partySong = document.getElementById("partySong");
 const musicButton = document.getElementById("musicButton");
 const rsvpForm = document.getElementById("rsvpForm");
@@ -830,6 +1205,15 @@ const ownerUnlock = document.getElementById("ownerUnlock");
 const guestListPanel = document.getElementById("guestListPanel");
 const guestList = document.getElementById("guestList");
 const guestListTitle = document.getElementById("guestListTitle");
+const jewelryBox = document.getElementById("jewelryBox");
+const jewelryStage = document.querySelector(".jewelry-stage");
+const jewelryItems = document.getElementById("jewelryItems");
+const jewelryButtons = document.querySelectorAll(".jewelry-item");
+const detailSparkles = document.getElementById("detailSparkles");
+const detailGameMessage = document.getElementById("detailGameMessage");
+const unlockedDetails = document.getElementById("unlockedDetails");
+const unlockedCountdown = document.getElementById("unlockedCountdown");
+const detailRows = document.querySelectorAll("[data-detail]");
 const rsvpStorageKey = "mennaHennaNightGuests";
 const ownerCode = "menna";
 const rsvpEndpoint = "https://script.google.com/macros/s/AKfycbxjDNKJcERXHkmIedS42_PFwSfoiqaeOjHVrfqxFB3X2a5bykT-v2QlK7L6vwCDzPgnPA/exec";
@@ -838,24 +1222,139 @@ function hasSharedRsvp(){
     return rsvpEndpoint.startsWith("https://script.google.com/");
 }
 
+function formatCountdownUnit(value){
+    return String(value).padStart(2, "0");
+}
+
+function openJewelryBox(){
+    jewelryBox.classList.add("is-open");
+    jewelryItems.classList.add("is-visible");
+    detailGameMessage.textContent = "";
+}
+
+function randomizeJewelryItems(){
+    const shuffledItems = Array.from(jewelryButtons).sort(() => Math.random() - 0.5);
+
+    shuffledItems.forEach((item, index) => {
+        item.style.setProperty("--item-index", index);
+        jewelryItems.appendChild(item);
+    });
+}
+
+function clearDetailEffects(){
+    detailSparkles.innerHTML = "";
+}
+
+function makeDetailSparkles(count, confetti){
+    clearDetailEffects();
+
+    for(let index = 0; index < count; index += 1){
+        const sparkle = document.createElement("span");
+        const x = 18 + Math.random() * 64;
+        const y = 18 + Math.random() * 58;
+        const dx = -90 + Math.random() * 180;
+        const dy = -70 + Math.random() * 150;
+
+        sparkle.className = confetti ? "detail-confetti" : "detail-sparkle";
+        sparkle.style.setProperty("--x", `${x}%`);
+        sparkle.style.setProperty("--y", `${y}%`);
+        sparkle.style.setProperty("--dx", dx);
+        sparkle.style.setProperty("--dy", dy);
+        sparkle.style.setProperty("--color", index % 2 === 0 ? "#d5a652" : "#fff4c8");
+        detailSparkles.appendChild(sparkle);
+    }
+
+    window.setTimeout(clearDetailEffects, confetti ? 1900 : 1100);
+}
+
+function revealEventDetails(){
+    unlockedDetails.classList.add("is-visible");
+
+    detailRows.forEach((row, index) => {
+        window.setTimeout(() => {
+            row.classList.add("is-visible");
+        }, index * 400);
+    });
+
+    window.setTimeout(() => {
+        unlockedCountdown.classList.add("is-visible");
+    }, detailRows.length * 400);
+
+}
+
+function chooseJewelryItem(item){
+    if(item.dataset.correct !== "true"){
+        item.classList.remove("is-wrong");
+        void item.offsetWidth;
+        item.classList.add("is-wrong");
+        detailGameMessage.textContent = "Not this one ✨";
+        makeDetailSparkles(10, false);
+        return;
+    }
+
+    detailGameMessage.textContent = "You found it!";
+    const itemRect = item.getBoundingClientRect();
+    const stageRect = jewelryStage.getBoundingClientRect();
+    const moveX = stageRect.left + stageRect.width / 2 - (itemRect.left + itemRect.width / 2);
+    const moveY = stageRect.top + stageRect.height / 2 - (itemRect.top + itemRect.height / 2);
+    item.style.setProperty("--move-x", `${moveX}px`);
+    item.style.setProperty("--move-y", `${moveY}px`);
+    item.classList.add("is-correct");
+    jewelryButtons.forEach((button) => {
+        button.disabled = true;
+    });
+    makeDetailSparkles(34, true);
+    window.setTimeout(revealEventDetails, 750);
+}
+
+function resetDetailsGame(){
+    jewelryBox.classList.remove("is-open");
+    jewelryItems.classList.remove("is-visible");
+    detailGameMessage.textContent = "";
+    unlockedDetails.classList.remove("is-visible");
+    unlockedCountdown.classList.remove("is-visible");
+    clearDetailEffects();
+
+    detailRows.forEach((row) => {
+        row.classList.remove("is-visible");
+    });
+
+    jewelryButtons.forEach((button) => {
+        button.disabled = false;
+        button.style.removeProperty("--move-x");
+        button.style.removeProperty("--move-y");
+        button.classList.remove("is-wrong", "is-correct");
+    });
+}
+
+randomizeJewelryItems();
+
+jewelryBox.addEventListener("click", openJewelryBox);
+
+jewelryButtons.forEach((item) => {
+    item.addEventListener("click", () => {
+        chooseJewelryItem(item);
+    });
+});
+
 function updateCountdown(){
     const now = new Date().getTime();
     const distance = Math.max(targetDate - now, 0);
 
     document.getElementById("days").innerHTML =
-    Math.floor(distance / (1000 * 60 * 60 * 24));
+    formatCountdownUnit(Math.floor(distance / (1000 * 60 * 60 * 24)));
 
     document.getElementById("hours").innerHTML =
-    Math.floor((distance % (1000 * 60 * 60 * 24))
-    / (1000 * 60 * 60));
+    formatCountdownUnit(Math.floor((distance % (1000 * 60 * 60 * 24))
+    / (1000 * 60 * 60)));
 
     document.getElementById("minutes").innerHTML =
-    Math.floor((distance % (1000 * 60 * 60))
-    / (1000 * 60));
+    formatCountdownUnit(Math.floor((distance % (1000 * 60 * 60))
+    / (1000 * 60)));
 
     document.getElementById("seconds").innerHTML =
-    Math.floor((distance % (1000 * 60))
-    / 1000);
+    formatCountdownUnit(Math.floor((distance % (1000 * 60))
+    / 1000));
 }
 
 updateCountdown();
