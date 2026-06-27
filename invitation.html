@@ -123,16 +123,6 @@ body{
     padding:52px 20px 44px;
 }
 
-.hero::after{
-    content:"";
-    position:absolute;
-    left:50%;
-    bottom:22px;
-    width:1px;
-    height:64px;
-    background:linear-gradient(transparent, var(--gold));
-}
-
 .hero-content{
     position:relative;
     z-index:2;
@@ -175,6 +165,14 @@ body{
     color:#f9ede8;
     background:none;
     text-shadow:0 10px 28px rgba(0,0,0,.42);
+}
+
+.countdown-section,
+.game,
+.details,
+.rsvp{
+    padding:68px 20px;
+    text-align:center;
 }
 
 .countdown-section,
@@ -234,7 +232,6 @@ body{
     letter-spacing:3px;
     text-transform:uppercase;
 }
-
 .game-card{
     max-width:520px;
     margin:0 auto;
@@ -640,25 +637,8 @@ body{
         padding:48px 16px;
     }
 
-    .countdown{
-        grid-template-columns:repeat(2, minmax(0, 1fr));
-        width:min(350px, 100%);
-        border-radius:8px;
-    }
-
-    .box{
-        min-height:104px;
-        padding:20px 12px 18px;
-        border-right:1px solid rgba(213,166,82,.24);
-        border-bottom:1px solid rgba(213,166,82,.24);
-    }
-
-    .box:nth-child(2n){
-        border-right:0;
-    }
-
-    .box:nth-last-child(-n+2){
-        border-bottom:0;
+    .countdown-section{
+        padding:28px 14px 24px;
     }
 
     .detail-card{
@@ -775,12 +755,12 @@ body{
 
             <div class="box">
                 <span id="minutes">00</span>
-                <p>Minutes</p>
+                <p>Mins</p>
             </div>
 
             <div class="box">
                 <span id="seconds">00</span>
-                <p>Seconds</p>
+                <p>Secs</p>
             </div>
         </div>
     </section>
@@ -793,14 +773,14 @@ body{
             <p>&#128338; 6:00 PM</p>
             <p>&#127968; Home</p>
             <p>&#128205; <a href="https://maps.app.goo.gl/JqVXKKG3ZmG43tNh6" target="_blank" rel="noopener">Villa 61, Diplomatic Compound, New Cairo</a></p>
-            <p>&#10024; Dress Code: Burgundy and Black</p>
+            <p>&#10024; Dress code: Seductive</p>
         </div>
     </section>
 
     <section class="rsvp" id="rsvp">
         <p class="rsvp-kicker">Are You In?</p>
         <h2>Join The Chaos <span class="title-kiss" aria-label="kiss"></span></h2>
-        <p class="rsvp-copy">Let us know if you're coming to Menna's last night of freedom before 11 July 2026.</p>
+        <p class="rsvp-copy">Let us know if you're coming to Menna's last night of freedom.</p>
 
         <div class="rsvp-card">
             <form class="rsvp-form" id="rsvpForm">
@@ -852,6 +832,11 @@ const guestList = document.getElementById("guestList");
 const guestListTitle = document.getElementById("guestListTitle");
 const rsvpStorageKey = "mennaHennaNightGuests";
 const ownerCode = "menna";
+const rsvpEndpoint = "https://script.google.com/macros/s/AKfycbxjDNKJcERXHkmIedS42_PFwSfoiqaeOjHVrfqxFB3X2a5bykT-v2QlK7L6vwCDzPgnPA/exec";
+
+function hasSharedRsvp(){
+    return rsvpEndpoint.startsWith("https://script.google.com/");
+}
 
 function updateCountdown(){
     const now = new Date().getTime();
@@ -924,6 +909,51 @@ function saveGuests(guests){
     localStorage.setItem(rsvpStorageKey, JSON.stringify(guests));
 }
 
+function loadSharedGuests(){
+    if(!hasSharedRsvp()){
+        return Promise.resolve(getGuests());
+    }
+
+    return new Promise((resolve, reject) => {
+        const callbackName = `mennaGuests${Date.now()}`;
+        const script = document.createElement("script");
+
+        function cleanup(){
+            delete window[callbackName];
+            script.remove();
+        }
+
+        window[callbackName] = (payload) => {
+            cleanup();
+            resolve(Array.isArray(payload.guests) ? payload.guests : []);
+        };
+
+        script.onerror = () => {
+            cleanup();
+            reject(new Error("Could not load guest list."));
+        };
+
+        script.src = `${rsvpEndpoint}?callback=${callbackName}&t=${Date.now()}`;
+        document.body.appendChild(script);
+    });
+}
+
+function saveSharedGuest(guest){
+    if(!hasSharedRsvp()){
+        return Promise.resolve(false);
+    }
+
+    return fetch(rsvpEndpoint, {
+        method:"POST",
+        mode:"no-cors",
+        headers:{
+            "Content-Type":"text/plain;charset=utf-8"
+        },
+        body:JSON.stringify(guest)
+    })
+    .then(() => true);
+}
+
 function getAnswerLabel(answer){
     if(answer === "in"){
         return "Coming";
@@ -936,8 +966,20 @@ function getAnswerLabel(answer){
     return "Can't Make It";
 }
 
-function renderGuests(){
-    const guests = getGuests();
+async function renderGuests(){
+    guestListTitle.textContent = "Loading RSVPs...";
+    guestList.innerHTML = "";
+
+    let guests = getGuests();
+
+    try{
+        guests = await loadSharedGuests();
+        saveGuests(guests);
+    }
+    catch(error){
+        rsvpStatus.textContent = "Could not load the shared list, showing saved responses on this device.";
+    }
+
     const guestsIn = guests.filter((guest) => guest.answer === "in");
     guestListTitle.textContent = `Who's In (${guestsIn.length})`;
     guestList.innerHTML = "";
@@ -961,7 +1003,7 @@ function renderGuests(){
     });
 }
 
-rsvpForm.addEventListener("submit", (event) => {
+rsvpForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const name = guestName.value.trim();
@@ -987,6 +1029,19 @@ rsvpForm.addEventListener("submit", (event) => {
     }
 
     saveGuests(guests);
+
+    if(hasSharedRsvp()){
+        rsvpStatus.textContent = "Saving your RSVP...";
+
+        try{
+            await saveSharedGuest(nextGuest);
+            rsvpStatus.textContent = "Saved. Your RSVP is on the shared list.";
+        }
+        catch(error){
+            rsvpStatus.textContent = "Saved on this device, but the shared list did not update.";
+        }
+    }
+
     if(guestListPanel.classList.contains("is-visible")){
         renderGuests();
     }

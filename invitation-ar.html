@@ -124,16 +124,6 @@ body{
     padding:52px 20px 44px;
 }
 
-.hero::after{
-    content:"";
-    position:absolute;
-    left:50%;
-    bottom:22px;
-    width:1px;
-    height:64px;
-    background:linear-gradient(transparent, var(--gold));
-}
-
 .hero-content{
     position:relative;
     z-index:2;
@@ -165,23 +155,6 @@ body{
     margin-top:20px;
     font-size:1.12rem;
     color:#f9ede8;
-}
-
-.countdown-section,
-.game,
-.details,
-.rsvp{
-    padding:68px 20px;
-    text-align:center;
-}
-
-.countdown-title,
-.game h2,
-.details h2,
-.rsvp h2{
-    font-size:clamp(2rem, 6vw, 3.3rem);
-    margin-bottom:26px;
-    color:white;
 }
 
 .countdown{
@@ -625,25 +598,8 @@ body{
         padding:48px 16px;
     }
 
-    .countdown{
-        grid-template-columns:repeat(2, minmax(0, 1fr));
-        width:min(350px, 100%);
-        border-radius:8px;
-    }
-
-    .box{
-        min-height:104px;
-        padding:20px 12px 18px;
-        border-right:1px solid rgba(213,166,82,.24);
-        border-bottom:1px solid rgba(213,166,82,.24);
-    }
-
-    .box:nth-child(2n){
-        border-right:0;
-    }
-
-    .box:nth-last-child(-n+2){
-        border-bottom:0;
+    .countdown-section{
+        padding:28px 14px 24px;
     }
 
     .detail-card{
@@ -838,25 +794,34 @@ const guestList = document.getElementById("guestList");
 const guestListTitle = document.getElementById("guestListTitle");
 const rsvpStorageKey = "mennaHennaNightGuests";
 const ownerCode = "menna";
+const rsvpEndpoint = "https://script.google.com/macros/s/AKfycbxjDNKJcERXHkmIedS42_PFwSfoiqaeOjHVrfqxFB3X2a5bykT-v2QlK7L6vwCDzPgnPA/exec";
+
+function hasSharedRsvp(){
+    return rsvpEndpoint.startsWith("https://script.google.com/");
+}
+
+function formatCountdownUnit(value){
+    return String(value).padStart(2, "0");
+}
 
 function updateCountdown(){
     const now = new Date().getTime();
     const distance = Math.max(targetDate - now, 0);
 
     document.getElementById("days").innerHTML =
-    Math.floor(distance / (1000 * 60 * 60 * 24));
+    formatCountdownUnit(Math.floor(distance / (1000 * 60 * 60 * 24)));
 
     document.getElementById("hours").innerHTML =
-    Math.floor((distance % (1000 * 60 * 60 * 24))
-    / (1000 * 60 * 60));
+    formatCountdownUnit(Math.floor((distance % (1000 * 60 * 60 * 24))
+    / (1000 * 60 * 60)));
 
     document.getElementById("minutes").innerHTML =
-    Math.floor((distance % (1000 * 60 * 60))
-    / (1000 * 60));
+    formatCountdownUnit(Math.floor((distance % (1000 * 60 * 60))
+    / (1000 * 60)));
 
     document.getElementById("seconds").innerHTML =
-    Math.floor((distance % (1000 * 60))
-    / 1000);
+    formatCountdownUnit(Math.floor((distance % (1000 * 60))
+    / 1000));
 }
 
 updateCountdown();
@@ -910,6 +875,51 @@ function saveGuests(guests){
     localStorage.setItem(rsvpStorageKey, JSON.stringify(guests));
 }
 
+function loadSharedGuests(){
+    if(!hasSharedRsvp()){
+        return Promise.resolve(getGuests());
+    }
+
+    return new Promise((resolve, reject) => {
+        const callbackName = `mennaGuests${Date.now()}`;
+        const script = document.createElement("script");
+
+        function cleanup(){
+            delete window[callbackName];
+            script.remove();
+        }
+
+        window[callbackName] = (payload) => {
+            cleanup();
+            resolve(Array.isArray(payload.guests) ? payload.guests : []);
+        };
+
+        script.onerror = () => {
+            cleanup();
+            reject(new Error("Could not load guest list."));
+        };
+
+        script.src = `${rsvpEndpoint}?callback=${callbackName}&t=${Date.now()}`;
+        document.body.appendChild(script);
+    });
+}
+
+function saveSharedGuest(guest){
+    if(!hasSharedRsvp()){
+        return Promise.resolve(false);
+    }
+
+    return fetch(rsvpEndpoint, {
+        method:"POST",
+        mode:"no-cors",
+        headers:{
+            "Content-Type":"text/plain;charset=utf-8"
+        },
+        body:JSON.stringify(guest)
+    })
+    .then(() => true);
+}
+
 function getAnswerLabel(answer){
     if(answer === "in"){
         return "جاية";
@@ -922,8 +932,20 @@ function getAnswerLabel(answer){
     return "مش هتحضر";
 }
 
-function renderGuests(){
-    const guests = getGuests();
+async function renderGuests(){
+    guestListTitle.textContent = "تحميل الردود...";
+    guestList.innerHTML = "";
+
+    let guests = getGuests();
+
+    try{
+        guests = await loadSharedGuests();
+        saveGuests(guests);
+    }
+    catch(error){
+        rsvpStatus.textContent = "تعذر تحميل القائمة المشتركة، يتم عرض الردود المحفوظة على هذا الجهاز.";
+    }
+
     const guestsIn = guests.filter((guest) => guest.answer === "in");
     guestListTitle.textContent = `مين جاية (${guestsIn.length})`;
     guestList.innerHTML = "";
@@ -947,7 +969,7 @@ function renderGuests(){
     });
 }
 
-rsvpForm.addEventListener("submit", (event) => {
+rsvpForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const name = guestName.value.trim();
@@ -973,6 +995,19 @@ rsvpForm.addEventListener("submit", (event) => {
     }
 
     saveGuests(guests);
+
+    if(hasSharedRsvp()){
+        rsvpStatus.textContent = "جاري حفظ الرد...";
+
+        try{
+            await saveSharedGuest(nextGuest);
+            rsvpStatus.textContent = "تم الحفظ. ردك اتسجل في القائمة المشتركة.";
+        }
+        catch(error){
+            rsvpStatus.textContent = "اتسجل على هذا الجهاز، لكن القائمة المشتركة لم تتحدث.";
+        }
+    }
+
     if(guestListPanel.classList.contains("is-visible")){
         renderGuests();
     }
