@@ -210,7 +210,7 @@ body{
     align-items:center;
     justify-content:center;
     padding:0 22px;
-    overflow:hidden;
+    overflow:visible;
     border:0;
     border-radius:0;
     background:transparent;
@@ -680,17 +680,27 @@ body{
     }
 
     .countdown{
-        flex-wrap:wrap;
-        row-gap:18px;
+        flex-wrap:nowrap;
+        width:100%;
     }
 
     .box{
-        flex:0 0 50%;
+        flex:1 1 25%;
+        min-height:64px;
         min-width:0;
-        padding:0 12px;
+        padding:0 8px 4px;
     }
 
-    .box:nth-child(2)::after,
+    .box span{
+        font-size:clamp(1.65rem, 10vw, 2.15rem);
+    }
+
+    .box p{
+        margin-top:7px;
+        font-size:.68rem;
+        line-height:1.2;
+    }
+
     .box:last-child::after{
         display:none;
     }
@@ -829,7 +839,7 @@ body{
     </section>
 
     <section class="details">
-        <h2>تفاصيل المناسبة</h2>
+        <h2>تفاصيل الحنة</h2>
 
         <div class="detail-card">
             <p>١١ يوليو ٢٠٢٦</p>
