@@ -1387,6 +1387,12 @@ function hideMusicButton(){
     musicButton.classList.remove("is-visible");
 }
 
+function stopPartySong(){
+    partySong.pause();
+    partySong.currentTime = 0;
+    showMusicButton();
+}
+
 function playPartySong(){
     return partySong.play()
     .then(hideMusicButton)
@@ -1399,6 +1405,15 @@ window.addEventListener("load", () => {
 
 musicButton.addEventListener("click", () => {
     playPartySong();
+});
+
+window.addEventListener("pagehide", stopPartySong);
+window.addEventListener("beforeunload", stopPartySong);
+
+document.addEventListener("visibilitychange", () => {
+    if(document.hidden){
+        stopPartySong();
+    }
 });
 
 ownerUnlock.addEventListener("click", () => {
